@@ -1,6 +1,7 @@
 # Dashboard-Jogos-mais-vendidos-da-Steam
 
 📝 Descrição 
+     
      O projeto objetivou realizar uma análise da base de dados de jogos comercializados na plataforma Steam, de modo a criar um dashboard interativo, no qual o usuário poderá explorar informações relevantes no que se refere ao segmento gamer.
 
 🗃️ 1. Conjunto de Dados 
@@ -9,16 +10,23 @@ Justificativa:
 Formato: CSV
 
 🧹 2. Tratamento de Dados
-Limpeza de Dados: 
-Tratamento de Outliers: 
+
+Limpeza de Dados:
+
+Tratamento de Outliers: Foram identificados outliers que representam menos de 0.1% dos dados e, uma vez que não efetam a análise geral do dataset, não foram excluídos
 
 
 💡 3. Insights
 
 
 📚 4. Bibliotecas Utilizadas
+
  • Pandas
+ 
  • Matplotlib
+ 
  • Seaborn
+ 
  • Streamlit
+ 
  • Plotly Express
