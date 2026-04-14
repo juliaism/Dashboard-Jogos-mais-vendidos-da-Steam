@@ -13,10 +13,10 @@ st.title("Análise de Jogos Mais Vendidos na Steam")
 st.cache_data
 def load_data():
     df = pd.read_csv('dataset_final.csv')
-
     return df
 
 df = load_data()
+
 
 # Filtros na barra lateral de tamanho dos gráficos
 st.sidebar.header("Filtros de tamanho dos gráficos")
@@ -29,18 +29,18 @@ st.header("Top Vendas, Desenvolvedores e Tags")
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.subheader("Top Jogos por Vendas")
+    st.markdown("Top Jogos Mais Vendidos")
     top_vendas = df.groupby('game_name')['estimated_downloads'].sum().sort_values(ascending=False).head(top_vendas_filtradas)
-    st.bar_chart(top_vendas, sort="-estimated_downloads")
+    st.bar_chart(top_vendas, x_label="Jogos", y_label="Vendas", sort="-estimated_downloads")
 
 with col2:
-    st.subheader("Top Desenvolvedores")
+    st.markdown("Top Desenvolvedores")
     top_devs = df['developer'].value_counts().head(top_devs_filtradas)
-    st.bar_chart(top_devs, sort="-count")
+    st.bar_chart(top_devs, x_label="Desenvolvedores", y_label="Quantidade de Jogos", sort="-count")
+    
 
 with col3:
-     st.subheader("Top Tags Definidas por Usuários")
-
+       
      # Explode user_defined_tags para contar corretamente e filtra para evitar muitos registros
      df_tags = df[['game_name', 'user_defined_tags']]
      df_tags = df_tags.assign(user_defined_tags=df_tags['user_defined_tags'].str.split(',')).explode('user_defined_tags')
@@ -53,45 +53,52 @@ with col3:
     # Renomeia colunas e define 'Tags' como índice para exibir os nomes corretamente
      top_tags_df.columns = ['Tags', 'Quantidade']
      top_tags_df = top_tags_df.set_index('Tags')
-     
-     st.bar_chart(top_tags_df, y="Quantidade", sort="-Quantidade")
+     st.markdown("Top Tags Definidas por Usuário")
+     st.bar_chart(top_tags_df, x_label="Tags", y_label="Quantidade", sort="-Quantidade")
    
 # 2. Relacoes
 st.header("Análise de Relações")
-col4, col5 = st.columns(2)
 
-with col4:
     # Relação entre Dificuldade e duração da gameplay 
-    sns.set_style("whitegrid")
-    st.subheader("Dificuldade vs Duração da Gameplay")
-    fig, ax = plt.subplots(figsize=(10, 6))
-    sns.lineplot(data=df,x='difficulty',y='length',ax=ax,color='#1f77b4', errorbar=None)
-    ax.set_title('Análise: Dificuldade vs Duração da Gameplay', fontsize=16, fontweight='bold', pad=20, color='white')
-    ax.set_xlabel('Dificuldade', fontsize=12, color='white')
-    ax.set_ylabel('Duração da Gameplay (Horas)', fontsize=12, color='white')
-    ax.tick_params(colors='white')
-    st.plotly_chart(fig)
+sns.set_style("whitegrid")
+fig, ax = plt.subplots(figsize=(10, 6))
+sns.lineplot(data=df,x='difficulty',y='length',ax=ax,color='#1f77b4', errorbar=None)
+ax.set_title('Dificuldade vs Duração da Gameplay', fontsize=16, fontweight='bold', pad=20, color='white')
+ax.set_xlabel('Dificuldade', fontsize=12, color='white')
+ax.set_ylabel('Duração da Gameplay (Horas)', fontsize=12, color='white')
+ax.tick_params(colors='white')
+st.plotly_chart(fig)
 
-with col5:
-    # Relação entre Preço e Vendas
-    sns.set_style("darkgrid")
-    st.subheader("Preço vs Vendas")
-    fig, ax = plt.subplots(figsize=(10, 6))
-    sns.scatterplot(data=df,x='price',y='estimated_downloads', ax=ax,color='#1f77b4',s=100,alpha=0.7)
-    ax.set_title('Análise: Preço vs Vendas Estimadas', fontsize=16, fontweight='bold', pad=20, color='white')
-    ax.set_xlabel('Preço (USD)', fontsize=12, color='white')
-    ax.set_ylabel('Vendas Estimadas', fontsize=12, color='white')
-    ax.tick_params(colors='white')
-    st.plotly_chart(fig)
+fig = px.scatter(
+    df,
+    x="price",
+    y="estimated_downloads",
+    hover_name="game_name",
+    color="price",
+    title="Preço vs Vendas",
+    labels={
+        "price": "Preço (USD)",
+        "estimated_downloads": "Vendas",
+        "color": "Preço do Jogo"
+    }
+)
 
-    #Vendas por Ano de Lançamento
-st.subheader("Vendas por Ano de Lançamento")
-release_year_sales = df.groupby('release_year')['estimated_downloads'].sum().sort_values(ascending=False).head(10)
-st.bar_chart(release_year_sales, sort="-estimated_downloads")
+fig.update_layout(template="plotly_dark")
+st.plotly_chart(fig, use_container_width=True)
 
+#Vendas por preco
 st.subheader("Vendas por Preço") 
 price_sales = df.groupby('price')['estimated_downloads'].sum().sort_values(ascending=False).head(5)
-st.bar_chart(price_sales, sort="-estimated_downloads")
+st.bar_chart(price_sales, sort="-estimated_downloads", x_label="Preço (USD)", y_label="Vendas")
+
+#Vendas por Ano de Lançamento
+st.subheader("Vendas por Ano de Lançamento")
+release_year_sales = df.groupby('release_year', as_index=False)['estimated_downloads'].sum()
+release_year_sales = release_year_sales.sort_values(by='estimated_downloads', ascending=True)
+release_year_sales = release_year_sales.set_index('release_year')
+st.bar_chart(release_year_sales['estimated_downloads'], x_label="Anos", y_label="Vendas")
+
+
 
 # 3. Análise de Distribuição
 st.header("Análise de Distribuição")
