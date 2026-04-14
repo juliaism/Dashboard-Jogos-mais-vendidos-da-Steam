@@ -15,7 +15,7 @@
 
 • Conversão de Dados: A coluna "release_date" é convertida de string para datetime facilitando a extração do ano para a criação da coluna "release_year".
 
-• Limpeza de Dados: Para a ánalise das colunas "user_defined_tags" e "supported_os" foi necessário criar um novo Dataframe contendo apenas as colunas necessárias ("game_name" e "user_defined_tags"/"supported_os"), converter a string dos dados em uma lista, .str.split(','), e depois utilizar .exploed(coluna) para transformar cada elemento af lista em uma nova linha, garantindo que elementos de tags e os sejam lidos individualmente e não em grupo como estão no Dataset, por fim espaços em branco e vazios foram removidos.
+• Limpeza de Dados: Para a ánalise das colunas "user_defined_tags" e "supported_os" foi necessário criar um novo Dataframe contendo apenas as colunas necessárias ("game_name" e "user_defined_tags"/"supported_os"), converter a string dos dados em uma lista, .str.split(','), e depois utilizar .exploed(coluna) para transformar cada elemento da lista em uma nova linha, garantindo que elementos de "tags" e "os" sejam lidos individualmente e não em grupo como estão no Dataset, por fim espaços em branco e vazios foram removidos.
 
 • Tratamento de Outliers: Foram identificados outliers que representam menos de 0.1% dos dados e, uma vez que não efetam a análise geral do dataset, não foram excluídos
 
