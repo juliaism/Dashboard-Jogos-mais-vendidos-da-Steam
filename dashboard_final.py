@@ -59,23 +59,17 @@ with col3:
 # 2. Relacoes
 st.header("Análise de Relações")
 
-    # Relação entre Dificuldade e duração da gameplay 
+# Relação entre Dificuldade e duração da gameplay 
 sns.set_style("whitegrid")
 fig, ax = plt.subplots(figsize=(10, 6))
 sns.lineplot(data=df,x='difficulty',y='length',ax=ax,color='#1f77b4', errorbar=None)
-ax.set_title('Dificuldade vs Duração da Gameplay', fontsize=16, fontweight='bold', pad=20, color='white')
+st.markdown("Dificuldade vs Duração da Gameplay")
 ax.set_xlabel('Dificuldade', fontsize=12, color='white')
 ax.set_ylabel('Duração da Gameplay (Horas)', fontsize=12, color='white')
 ax.tick_params(colors='white')
 st.plotly_chart(fig)
 
-fig = px.scatter(
-    df,
-    x="price",
-    y="estimated_downloads",
-    hover_name="game_name",
-    color="price",
-    title="Preço vs Vendas",
+fig = px.scatter(df,x="price", y="estimated_downloads",hover_name="game_name",color="price",
     labels={
         "price": "Preço (USD)",
         "estimated_downloads": "Vendas",
@@ -84,15 +78,16 @@ fig = px.scatter(
 )
 
 fig.update_layout(template="plotly_dark")
+st.markdown("Preço vs Vendas")
 st.plotly_chart(fig, use_container_width=True)
 
 #Vendas por preco
-st.subheader("Vendas por Preço") 
+st.markdown("Vendas por Preço") 
 price_sales = df.groupby('price')['estimated_downloads'].sum().sort_values(ascending=False).head(5)
 st.bar_chart(price_sales, sort="-estimated_downloads", x_label="Preço (USD)", y_label="Vendas")
 
 #Vendas por Ano de Lançamento
-st.subheader("Vendas por Ano de Lançamento")
+st.markdown("Vendas por Ano de Lançamento")
 release_year_sales = df.groupby('release_year', as_index=False)['estimated_downloads'].sum()
 release_year_sales = release_year_sales.sort_values(by='estimated_downloads', ascending=True)
 release_year_sales = release_year_sales.set_index('release_year')
@@ -110,7 +105,8 @@ df_os['supported_os'] = df_os['supported_os'].str.strip()
 df_os = df_os[df_os['supported_os'] != '']
 
 top_os = df_os['supported_os'].value_counts().head(3)
-fig_os = px.pie(values=top_os.values, names=top_os.index, title="Distribuição dos Sistemas Operacionais Suportados")
+fig_os = px.pie(values=top_os.values, names=top_os.index)
+st.markdown("Distribuição dos Sistemas Operacionais Suportados")
 st.plotly_chart(fig_os, use_container_width=True)
 
 # restricao de idade
@@ -118,7 +114,8 @@ df_age = df[['game_name', 'age_restriction']]
 top_age = df_age['age_restriction'].value_counts().head()
 top_age_df = top_age.reset_index()
 
-fig_languages = px.pie(values=top_age.values, names=top_age.index, title="Distribuição da Restrição de Idade")
+fig_languages = px.pie(values=top_age.values, names=top_age.index)
+st.markdown("Distribuição da Restrição de Idade")
 st.plotly_chart(fig_languages, use_container_width=True)
 
 # Exibir os dados brutos
