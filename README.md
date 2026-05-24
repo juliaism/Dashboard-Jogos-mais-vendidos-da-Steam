@@ -4,7 +4,7 @@
      O projeto objetivou realizar uma análise da base de dados de jogos comercializados na plataforma Steam, de modo a criar um dashboard interativo, no qual o usuário poderá explorar informações relevantes no que se refere ao segmento gamer.
 
 
-🗃️ 1. Conjunto de Dados 
+### 🗃️ Conjunto de Dados 
 
 • Dataset Utilizado: https://www.kaggle.com/datasets/hbugrae/best-selling-steam-games-of-all-time 
 
@@ -13,7 +13,7 @@
 • Formato: CSV
 
 
-🧹 2. Tratamento de Dados
+### 🧹 Tratamento de Dados
 
 • Conversão de Dados: A coluna "release_date" é convertida de string para datetime facilitando a extração do ano para a criação da coluna "release_year".
 
@@ -22,7 +22,7 @@
 • Tratamento de Outliers: Foram identificados outliers que representam menos de 0.1% dos dados e, uma vez que não efetam a análise geral do dataset, não foram excluídos
 
 
-💡 3. Insights
+### 💡 Insights
 
 1- Destaques: Jogos, Desenvolvedores e Tags
 
@@ -48,7 +48,7 @@
 • Classificação Indicativa: A maior fatia indica que uma grande parte do catálogo da Steam é voltada para o público adulto. Porém, as outras categorias mostram que a Steam possui uma biblioteca diversificada, atendendo todas as faixas etárias.
 
 
-📚 4. Bibliotecas Utilizadas
+### 📚 Bibliotecas Utilizadas
 
  • Pandas
  
