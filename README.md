@@ -41,7 +41,7 @@
 • Vendas por Ano de Lançamento: O gráfico mostra o crescimento da indústria, onde os lançamentos recentes (2024) detêm o recorde de faturamento, mas o catálogo histórico, com jogos presentes no topo da lista de mais vendidos, sustenta a base da plataforma. É importante destacar que os dados foram coletados antes do fim do ano de 2025 e por isso há uma grande queda em comparação aos anos anteriores.
 
 
-3. Ánalise de Distribuição
+3- Ánalise de Distribuição
 
 • Sistemas Operacionais Suportados: A distribuição reflete uma estratégia de alcance massivo, onde o suporte é otimizado para o Windows, mas mantém a cross-plataformidade essencial para não excluir usuários de outros sistemas.
 
